@@ -181,13 +181,9 @@ var
 begin
   h := Pointer(LongWord(block) - block.ofs);
 
-{$IFDEF SAP_CHECKMAGIC}
-  if h.header_magic <> cSmallBlockHeaderMagic then
-  begin
-    Result := cErrWrongHeaderMagic;
-    Exit;
-  end;
-{$ENDIF}
+  {$IFDEF SAP_CHECKMAGIC}
+  Assert(h.header_magic = cSmallBlockHeaderMagic);
+  {$ENDIF}
 
   block.tags := block.tags - [sap_allocated];
   Inc(h.free_count);
