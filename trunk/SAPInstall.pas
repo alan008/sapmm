@@ -38,7 +38,7 @@ asm
   lock inc [Value]
 end;
 
-function SAPGetMem(Size: {$IF CompilerVersion >= 24} NativeInt {$ELSE} Integer {$IFEND}): Pointer;
+function SAPGetMem(Size: {$IF CompilerVersion >= 23} NativeInt {$ELSE} Integer {$IFEND}): Pointer;
 var
   mm: PSAPThreadMM;
 begin
@@ -67,7 +67,7 @@ begin
 
 end;
 
-function SAPAllocMem(Size: {$IF CompilerVersion >= 24} NativeInt {$ELSE} Cardinal {$IFEND}): Pointer;
+function SAPAllocMem(Size: {$IF CompilerVersion >= 23} NativeInt {$ELSE} Cardinal {$IFEND}): Pointer;
 var
   mm: PSAPThreadMM;
 begin
@@ -185,7 +185,7 @@ end;
 function InterThreadRealloc(tmm, mm: PSAPThreadMM; p: Pointer; size: LongWord): Pointer;
 forward;
 
-function SAPReallocMem(p: Pointer; size: {$IF CompilerVersion >= 24} NativeInt {$ELSE} Integer {$IFEND}): Pointer;
+function SAPReallocMem(p: Pointer; size: {$IF CompilerVersion >= 23} NativeInt {$ELSE} Integer {$IFEND}): Pointer;
 var
   mm: PSAPThreadMM;  // лл for the allocated memory block
   tmm: PSAPThreadMM; // MM for current thread
