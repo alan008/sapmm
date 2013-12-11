@@ -239,7 +239,7 @@ begin
   if Chunks > 0 then
     SSE2AlignedMemFill16(AlignedSrc, Chunks);
   AlignedSrc := Pointer(Cardinal(AlignedSrc) + (Chunks shl 4));
-  for Idx := 0 to Integer(Cardinal(Size - (Cardinal(AlignedSrc) - Cardinal(Src)))) - 1 do TSapByteArray(AlignedSrc)[Idx] := 0;
+  for Idx := 0 to Integer(Cardinal(Size - (Cardinal(AlignedSrc) - Cardinal(Src)))) - 1 do
     TSapByteArray(AlignedSrc)[Idx] := 0;
 {$IFDEF RANGEON}  // If range checking was on before turning it off
   {$R+}           // Turn range checks back on
