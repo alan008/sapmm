@@ -22,10 +22,10 @@ const
 // ----- Large (OS) blocks -----
 
   // Size of blocks, requested from OS
-  cOSBlockSize = 64 * 1024 * 16; // Size of large (OS) memory block (in bytes), requested directly from OS
+  cOSBlockSize = 64 * 1024 * 32; // Size of large (OS) memory block (in bytes), requested directly from OS
 
   // Free blocks global pool size (global pool for all threads)
-  cMaxOSBlocksInPool   = 200;  // Maximum number of freed OS blocks, which are not returned to the OS 
+  cMaxOSBlocksInPool   = 100;  // Maximum number of freed OS blocks, which are not returned to the OS
 			       // and stay in pool for future reuse. When free blocks pool size reaches cMaxOSBlocksInPool
 			       // other freed blocks are returned directly to the OS
 // ----- Small blocks -----
