@@ -413,7 +413,7 @@ begin
 
   block_size := GetAllocatedSize(p);
 
-  if (block_size >= size) and ((block_size - size <= 32) or (size > block_size shr 1)) then
+  if (block_size >= size) and ((block_size - size <= 64) or (size > block_size shr 1)) then
   begin
     // Keep block "in place" if:
     //  1. difference is small
