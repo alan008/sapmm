@@ -35,6 +35,8 @@ procedure SSE2AlignedMemFill16(dst: Pointer; A16bytesmultiple: Integer);
 
 implementation
 
+{$CODEALIGN 16}
+
 procedure SAPMoveMemory(const Destination, Source: Pointer; const Size: Integer);
 begin
   if IsSSE2Supported and (Size >= 128) and ((Cardinal(Source) - Cardinal(Size) >= Cardinal(Destination)) or
@@ -54,6 +56,7 @@ end;
 
 procedure SSE2AlignedMemCopy128(dst, src: Pointer; A128bytesmultiple: Integer);
 asm
+  .align 16
   @Copy_loop:
   PREFETCHNTA 32[EDX] // Pre-fetch data
   PREFETCHNTA 64[EDX] // Pre-fetch data
@@ -78,11 +81,11 @@ asm
   Add eax,128
   Dec ecx
   Jnz @Copy_loop
-  emms
 end;
 
 procedure SSE2DoubleAlignedMemCopy128(dst, src: Pointer; A128bytesmultiple: Integer);
 asm
+  .align 16
   @Copy_loop:
   PREFETCHNTA 32[EDX] // Pre-fetch data
   PREFETCHNTA 64[EDX] // Pre-fetch data
@@ -107,11 +110,11 @@ asm
   Add eax,128
   Dec ecx
   Jnz @Copy_loop
-  emms
 end;
 
 procedure SSE2AlignedMemCopy16(dst, src: Pointer; A16bytesmultiple: Integer);
 asm
+  .align 16
   @Copy_loop:
   Movdqa xmm0,[edx]
   Movdqu [eax],xmm0
@@ -119,7 +122,6 @@ asm
   Add eax,16
   Dec ecx
   Jnz @Copy_loop
-  emms
 end;
 
 procedure SSE2MemoryCopy(dst, src: Pointer; Size: Cardinal);
@@ -175,20 +177,19 @@ end;
 procedure SSE2AlignedMemFill16(dst: Pointer; A16bytesmultiple: Integer);
 asm
   PXOR XMM0,XMM0 // All zeros in XMM0
-
+  .align 16
   @Copy_loop:
   Movntdq [eax],xmm0
   Add eax,16
   Dec edx
   Jnz @Copy_loop
   sfence
-  emms
 end;
 
 procedure SSE2AlignedMemFill128(dst: Pointer; A128bytesmultiple: Integer);
 asm
   PXOR XMM0,XMM0 // All zeros in XMM0
-
+  .align 16
   @Copy_loop:
   Movntdq [eax],xmm0
   Movntdq [eax+16],xmm0
@@ -202,7 +203,6 @@ asm
   Dec edx
   Jnz @Copy_loop
   sfence
-  emms
 end;
 
 procedure SSE2MemoryZero(src: Pointer; Size: Cardinal);
