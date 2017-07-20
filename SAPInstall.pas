@@ -220,8 +220,14 @@ begin
     mov tmm, eax
   end;
 
-  if mm = tmm then // Realloc inside one thread MM
+  // Create thread's MM if needed.
+  if tmm = nil then
   begin
+    tmm := CreateThreadMM;
+  end
+  else if mm = tmm then
+  begin
+    // Realloc inside one thread MM
     ThreadReallocMem(mm, p, size);
     Result := p;
     Exit;
